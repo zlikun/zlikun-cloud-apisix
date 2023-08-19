@@ -1,0 +1,49 @@
+server:
+  port: 20010
+  shutdown: graceful
+  max-http-header-size: 128KB
+
+spring:
+  application:
+    name: zlikun-cloud-apisix-user
+  profiles:
+    active: dev
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 5
+
+management:
+  server:
+    port: 20011
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+  info:
+    git:
+      enabled: true
+      mode: full
+
+logging:
+  pattern:
+    console: "[%X{X-Request-Id}] %d{HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n"
+  level:
+    root: info
+    io:
+      github:
+        zlikun:
+          jvm: debug

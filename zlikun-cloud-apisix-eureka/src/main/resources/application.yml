@@ -1,0 +1,48 @@
+server:
+  port: 8761
+  shutdown: graceful
+
+spring:
+  application:
+    name: zlikun-cloud-apisix-eureka
+  profiles:
+    active: dev
+
+eureka:
+  environment: ${spring.profiles.active}
+  instance:
+    prefer-ip-address: true
+  server:
+    use-read-only-response-cache: false
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 30000
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    fetch-registry: false
+    register-with-eureka: false
+    healthcheck:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+  info:
+    git:
+      enabled: true
+      mode: full
+
+logging:
+  level:
+    root: info
+    io:
+      github:
+        zlikun:
+          jvm: debug
